@@ -20,6 +20,8 @@ class student(person):
         self.student_id = student_id
         self.course = course
         self.grades = grades
+        self.mentor = "No mentor assigned"
+
     def set_student_details(self, student_id, course):
         self.student_id = student_id
         self.course = course
@@ -34,12 +36,16 @@ class student(person):
     def get_student_summary(self):
         return self.name, self.calculate_average_grade()
 
+    def get_mentor(self):
+        return self.mentor
+
 class proffesor(person):
     def __init__(self, name, age, gender, staff_id, department, salary):
         super().__init__(name, age, gender)
         self.staff_id = staff_id
         self.department = department
         self.salary = salary
+        self.proteges = []
     
     def set_professor_details(self, staff_id, department, salary):
         self.staff_id = staff_id
@@ -54,6 +60,11 @@ class proffesor(person):
     
     def get_professor_summary(self):
         return self.name, self.salary
+    
+    def mentor_student(self, student):
+        self.proteges.append(student.name)
+        student.mentor = self.name
+        print(f"Professor {self.name} is now mentoring Student {student.name} on {student.course}")
     
 class administatrator(person):
     def __init__(self, name, age, gender, admin_id, office, years_of_service):
@@ -89,4 +100,7 @@ douglas.increase_salary(10)
 
 dougie.increment_service_years()
 
+print(dog.get_mentor())
+douglas.mentor_student(dog)
+print(dog.get_mentor())
 print(doug.get_student_summary(), douglas.get_professor_summary(), dougie.get_admin_summary())
